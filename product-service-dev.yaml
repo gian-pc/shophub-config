@@ -1,0 +1,7 @@
+spring:
+  jpa:
+    show-sql: true
+
+product:
+  welcome:
+    message: "Bienvenido a Product Service - AMBIENTE DEV"
