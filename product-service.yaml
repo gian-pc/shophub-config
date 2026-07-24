@@ -23,3 +23,7 @@ management:
     web:
       exposure:
         include: refresh
+        
+product:
+  welcome:
+    message: "Bienvenido a Product Service - version actualizada"
