@@ -51,13 +51,13 @@ resilience4j:
         wait-duration: 1000ms
 
 # ========================================
-# ACTUATOR - DIAGNOSTICO DE CIRCUIT BREAKER
+# ACTUATOR - OBSERVABILIDAD (Sprint 6)
 # ========================================
 management:
   endpoints:
     web:
       exposure:
-        include: health,circuitbreakers,circuitbreakerevents
+        include: health,circuitbreakers,circuitbreakerevents,retryevents,metrics
   endpoint:
     health:
       show-details: always   # Muestra el detalle del estado del CB
