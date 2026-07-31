@@ -17,6 +17,8 @@ spring:
           default:
             connectTimeout: 2000
             readTimeout: 3000
+      circuitbreaker:
+        enabled: false
 
 eureka:
   client:
