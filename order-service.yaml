@@ -25,16 +25,37 @@ eureka:
     service-url:
       defaultZone: http://${EUREKA_HOST:localhost}:8761/eureka
 
+# ========================================
+# RESILIENCE4J - ASPECT ORDER FIX
+# ========================================
 resilience4j:
-  retry:
-    instances:
-      ProductClient:
-        max-attempts: 3
-        wait-duration: 1000ms
   circuitbreaker:
+    circuitBreakerAspectOrder: 1   # CircuitBreaker outer (ejecuta primero)
     instances:
       ProductClient:
+        registerHealthIndicator: true   # Expone en /actuator/health
         sliding-window-size: 5
         failure-rate-threshold: 50
         wait-duration-in-open-state: 10s
         permitted-number-of-calls-in-half-open-state: 2
+  retry:
+    retryAspectOrder: 2   # Retry inner (ejecuta despues, dentro del CircuitBreaker)
+    instances:
+      ProductClient:
+        max-attempts: 3
+        wait-duration: 1000ms
+
+# ========================================
+# ACTUATOR - DIAGNOSTICO DE CIRCUIT BREAKER
+# ========================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,circuitbreakers,circuitbreakerevents
+  endpoint:
+    health:
+      show-details: always   # Muestra el detalle del estado del CB
+  health:
+    circuitbreakers:
+      enabled: true
